@@ -34,6 +34,7 @@ obj.mapping = {
   previousScreen = { obj.mash, 'p' },
   resizeOut = { obj.mash, '=' },
   resizeIn = { obj.mash, '-' },
+  myRearrange = { obj.mash, 'v'},
 }
 
 local units = {
@@ -84,6 +85,11 @@ function obj:moveWithCycles(unitFn)
       self:moveWithCycles(unitFn)
     end
   end
+end
+
+function obj:twoThirdsWidthAndFiveSixsHeight()
+	local screen = self.hs.window.focusedWindow():screen():frame()
+  self:move({ x = screen.w / 6, y = 0, w = 2/3 * screen.w, h = 5/6 * screen.h})
 end
 
 function obj:resizeWindowInSteps(increment)
@@ -232,6 +238,7 @@ function obj:bindHotkeys(mapping)
   self.hs.hotkey.bind(self.mapping.previousScreen[1], self.mapping.previousScreen[2], function() self:prevScreen() end)
   self.hs.hotkey.bind(self.mapping.resizeOut[1], self.mapping.resizeOut[2], function() self:resizeOut() end)
   self.hs.hotkey.bind(self.mapping.resizeIn[1], self.mapping.resizeIn[2], function() self:resizeIn() end)
+  self.hs.hotkey.bind(self.mapping.myRearrange[1], self.mapping.myRearrange[2], function () self:twoThirdsWidthAndFiveSixsHeight() end)
 
   return self
 end
